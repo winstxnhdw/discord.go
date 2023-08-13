@@ -7,3 +7,27 @@ Existing Discord API wrappers do not have support for Discord self-bots. This is
 ```bash
 go get -u github.com/winstxnhdw/discord.go
 ```
+
+## Usage
+
+Create a Discord client with your personal Discord token.
+
+```go
+client := discord.Create(os.Getenv("DISCORD_TOKEN"))
+defer client.Dispose()
+```
+
+By default, every request is sent as soon as possible. You can set a delay between requests to avoid rate limiting.
+
+```go
+client := discord.Create(os.Getenv("DISCORD_TOKEN"), time.Second*2)
+```
+
+You can send a message to a channel. Every request returns a cancel function that can be used to cancel the request. This is useful for sending multiple messages without waiting for a response.
+
+```go
+response, cancelFunction, err := client.MessageChannel(
+    os.Getenv("DISCORD_CHANNEL_OR_USER_ID"),
+    "Hey, did you know that direct messages use the same API as channels?",
+)
+```
