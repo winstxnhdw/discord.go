@@ -9,12 +9,6 @@ import (
 	"time"
 )
 
-type DiscordClient interface {
-	request(endpoint string, data *bytes.Buffer) (*http.Response, error)
-	MessageChannel(channelId string, message string) (*http.Response, error)
-	Dispose()
-}
-
 type Discord struct {
 	httpClient            *http.Client
 	token                 string
