@@ -71,7 +71,7 @@ func (d Discord) request(context context.Context, endpoint string, data io.Reade
 	return io.ReadAll(response.Body)
 }
 
-func (d Discord) MessageChannel(channelId string, message string) ([]byte, context.CancelFunc, error) {
+func (d Discord) Message(id string, message string) ([]byte, context.CancelFunc, error) {
 	requestContext, requestContextCancelFunction := context.WithCancel(d.context)
 
 	data, err := json.Marshal(&DiscordMessage{Content: message})
@@ -80,7 +80,7 @@ func (d Discord) MessageChannel(channelId string, message string) ([]byte, conte
 		return nil, requestContextCancelFunction, err
 	}
 
-	body, err := d.request(requestContext, "/channels/"+channelId+"/messages", bytes.NewBuffer(data))
+	body, err := d.request(requestContext, "/channels/"+id+"/messages", bytes.NewBuffer(data))
 
 	return body, requestContextCancelFunction, err
 }
