@@ -26,7 +26,7 @@ client := discord.Create(os.Getenv("DISCORD_TOKEN"), time.Second*2)
 You can send a message to a channel. Every request returns a cancel function that can be used to cancel the request. This is useful for sending multiple messages without waiting for a response.
 
 ```go
-response, cancelFunction, err := client.MessageChannel(
+response, cancelFunction, err := client.Message(
     os.Getenv("DISCORD_CHANNEL_OR_USER_ID"),
     "Hey, did you know that direct messages use the same API as channels?",
 )
